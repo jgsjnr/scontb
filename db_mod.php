@@ -16,6 +16,7 @@ if ($link -> connect_errno){
 }else{
     echo '<h1>Conexão bem sucedida: </h1><br>';
 }
+$hashmod=$_POST['hash'];
 $banco="lancamentos";
 $tipo=$_POST['tipo'];
 $valor=$_POST['valor'];
@@ -25,6 +26,14 @@ $parcelado=$_POST['parcelado'];
 $qtdparc=(int)$_POST['qtdparc'];
 
 $anomes = date("Ym", strtotime($anomesdia));
+
+echo $hashmod;
+if(!$link -> query("DELETE FROM lancamentos WHERE Validacao = '$hashmod'")){
+    //echo '<h1>Não foi possível executar sua solicitacao</h1><br>' ;
+}
+if(!$link -> query("DELETE FROM hashes WHERE hash = '$hashmod'")){
+    //echo '<h1>Não foi possível executar sua solicitacao</h1><br>' ;
+}
 
 if($parcelado == "sim"){
     $validacaoString = $tipo."".$valor."".$anomesdia."".$descricao."".$parcelado."".$qtdparc;
@@ -42,8 +51,7 @@ if($parcelado == "sim"){
         $tmp_day = date("d", strtotime($anomesdia));
         $date = mktime(0,0,0,$tmp_month,$tmp_day, $tmp_year);
         $final = date("Y-m-d", $date);
-        $anomes = date("Ym", $date);
-        echo $anomes;
+        $anomes = date("Ym", strtotime($date));
         echo $final;
         $validacaoString = $tipo."".$valor."".$anomesdia."".$descricao."".$parcelado."".$qtdparc;
         $validacaoHash = hash("sha256", "$validacaoString");

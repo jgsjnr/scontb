@@ -24,12 +24,10 @@ $descricao=$_POST['descricao'];
 $parcelado=$_POST['parcelado'];
 $qtdparc=(int)$_POST['qtdparc'];
 
-$anomes = date("Ym", strtotime($anomesdia));
-
 if($parcelado == "sim"){
     $validacaoString = $tipo."".$valor."".$anomesdia."".$descricao."".$parcelado."".$qtdparc;
     $validacaoHash = hash("sha256", "$validacaoString");
-    if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc, anomes) VALUES('$tipo','$valor','$anomesdia','$validacaoHash','$descricao','$parcelado','$qtdparc', '1', '$anomes')")){
+    if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc) VALUES('$tipo','$valor','$anomesdia','$validacaoHash','$descricao','$parcelado','$qtdparc', '1')")){
         //echo '<h1>Não foi possível executar sua solicitacao</h1><br>' ;
     }
     if(!$link -> query("INSERT INTO hashes VALUES('$anomesdia','$validacaoHash')")){
@@ -42,13 +40,11 @@ if($parcelado == "sim"){
         $tmp_day = date("d", strtotime($anomesdia));
         $date = mktime(0,0,0,$tmp_month,$tmp_day, $tmp_year);
         $final = date("Y-m-d", $date);
-        $anomes = date("Ym", $date);
-        echo $anomes;
         echo $final;
         $validacaoString = $tipo."".$valor."".$anomesdia."".$descricao."".$parcelado."".$qtdparc;
         $validacaoHash = hash("sha256", "$validacaoString");
         $imaisum = $i+1;
-        if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc, anomes) VALUES('$tipo','$valor','$final','$validacaoHash','$descricao','$parcelado','$qtdparc', '$imaisum', '$anomes')")){
+        if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc) VALUES('$tipo','$valor','$final','$validacaoHash','$descricao','$parcelado','$qtdparc', '$imaisum')")){
             //echo '<h1>Não foi possível executar sua solicitacao</h1><br>' ;
         }
         echo('<p><strong>Validação: </strong>'.$validacaoHash.'<br>');
@@ -58,7 +54,7 @@ if($parcelado == "sim"){
 else{
     $validacaoString = $tipo."".$valor."".$anomesdia."".$descricao."".$parcelado."".$qtdparc;
     $validacaoHash = hash("sha256", "$validacaoString");
-    if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc, anomes) VALUES('$tipo','$valor','$anomesdia','$validacaoHash','$descricao','$parcelado','$qtdparc', '1', '$anomes')")){
+    if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc) VALUES('$tipo','$valor','$anomesdia','$validacaoHash','$descricao','$parcelado','$qtdparc', '1')")){
         //echo '<h1>Não foi possível executar sua solicitacao</h1><br>' ;
     }
     if(!$link -> query("INSERT INTO hashes VALUES('$anomesdia','$validacaoHash')")){

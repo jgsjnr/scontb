@@ -13,9 +13,9 @@
         <p id="subtitulo">Insira as informações abaixo</p>
         <br>
     </div>
-    <a href="input.php">Inserir</a>
-    <a href="mod.php">Modificar</a>
-    <a href="del.php">Deletar</a>
-    <a href="vis.php">Visualizar</a>
+    <form action="db_del.php" method="post">
+        <p><strong>Hash:</strong> <br><input type="text" name="hash" class="campo"/></p>
+        <p><input type="submit" class="botao" value="Deletar"/></p> <br>
+       </form> 
 </body>
 </html>
