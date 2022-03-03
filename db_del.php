@@ -1,3 +1,4 @@
+<?php include 'verify.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +31,7 @@ $link -> close();
 echo $hashmod;
 ?>
 <p><string><a href="./index.php">Voltar</a></strong>
+<p><?php echo "<p> $login_cookie </p>"; ?><string><a href="./logout.php">Deslogar</a></strong>
 </body>
 </html>
 

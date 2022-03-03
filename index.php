@@ -8,14 +8,17 @@
     <title>Sistema Contabil</title>
 </head>
 <body>
-    <div>
+    <div align="center">
         <h1 id="titulo">Cadastro de Valores</h1>
         <p id="subtitulo">Insira as informações abaixo</p>
         <br>
     </div>
-    <a href="input.php">Inserir</a>
-    <a href="mod.php">Modificar</a>
-    <a href="del.php">Deletar</a>
-    <a href="vis.php">Visualizar</a>
+    <div align="center">
+        <form method="POST" action="login.php">
+            <label>Login:</label><input type="text" name="login" id="login"><br>
+            <label>Senha:</label><input type="password" name="senha" id="senha"><br>
+            <input type="submit" value="entrar" id="entrar" name="entrar"><br>
+        </form>
+    </div>
 </body>
 </html>

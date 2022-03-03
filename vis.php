@@ -1,8 +1,13 @@
-<?php  
- $connect = mysqli_connect("localhost", "root", "1234", "contas");  
- $query ="SELECT * FROM lancamentos ORDER BY Id desc";  
- $result = mysqli_query($connect, $query);  
- ?>  
+<?php 
+     include 'verify.php';
+     $connect = mysqli_connect("localhost", "root", "1234", "contas");  
+     $query ="SELECT * FROM analise WHERE nParc = 1 ORDER BY Id desc";
+     $dropAnalise = "DROP TABLE IF EXISTS analise";
+     $makeAnalise = "CREATE TABLE analise AS (SELECT *, CASE WHEN QtdParc > 1 THEN 'Parcelado' ELSE 'A vista' END AS flag_prazo, CASE WHEN QtdParc = nParc THEN 'Final' WHEN nParc = 1 THEN 'Inicial' ELSE 'Parcial' END AS Parcial, CASE WHEN nParc = 1 THEN Valor END AS vl_total FROM lancamentos)";
+     $result = mysqli_query($connect, $dropAnalise);
+     $result = mysqli_query($connect, $makeAnalise);
+     $result = mysqli_query($connect, $query);  
+?>  
  <!DOCTYPE html>  
  <html>  
       <head>  
@@ -14,8 +19,8 @@
       <body>  
            <br /><br />  
            <div class="container" style="width:100%;">  
-                <h2 align="center">Export Mysql Table Data to CSV file in PHP</h2>  
-                <h3 align="center">Employee Data</h3>                 
+                <h2 align="center">Exportar os arquivos em CSV</h2>  
+                <h3 align="center">Analítico de Gastos</h3>                 
                 <br />  
                 <form method="post" action="export.php" align="center">  
                      <input type="submit" name="export" value="CSV Export" class="btn btn-success" />  
@@ -33,7 +38,12 @@
                                <th width="5%">Parcelado</th>
                                <th width="5%">QtdParc</th>
                                <th width="5%">nParc</th> 
-                               <th width="5%">anomes</th> 
+                               <th width="5%">anomes</th>
+                               <th width="5%">flag_prazo</th> 
+                               <th width="5%">Parcial</th> 
+                               <th width="5%">vl_total</th>
+                               <th width="5%">Parcela</th>
+                               <th width="5%">Usuario</th>
                           </tr>  
                      <?php  
                      while($row = mysqli_fetch_array($result))  
@@ -50,12 +60,18 @@
                                <td><?php echo $row["QtdParc"]; ?></td>
                                <td><?php echo $row["nParc"]; ?></td>
                                <td><?php echo $row["anomes"]; ?></td>
+                               <td><?php echo $row["flag_prazo"]; ?></td>
+                               <td><?php echo $row["Parcial"]; ?></td>
+                               <td><?php echo $row["vl_total"]; ?></td>
+                               <td><?php echo $row["parcela"]; ?></td>
+                               <td><?php echo $row["usuario"]; ?></td>
                           </tr>  
                      <?php       
                      }  
                      ?>  
                      </table>  
                 </div>  
-           </div>  
+           </div> 
+           <p><?php echo "<p> $login_cookie </p>"; ?><string><a href="./logout.php">Deslogar</a></strong>
       </body>  
  </html>

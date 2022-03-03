@@ -1,4 +1,5 @@
-<?php  
+<?php
+include 'verify.php';
       //export.php  
  if(isset($_POST["export"]))  
  {  

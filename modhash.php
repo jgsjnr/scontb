@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php include 'verify.php'; ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -65,6 +66,7 @@ else{
 }
 ?>
 <p><string><a href="./index.php">Voltar</a></strong>
+<p><?php echo "<p> $login_cookie </p>"; ?><string><a href="./logout.php">Deslogar</a></strong>
 </body>
 </html>
 

@@ -9,6 +9,7 @@
 </head>
 <body>
 <?php
+include 'verify.php';
 $link = new mysqli('localhost:3306', 'root', '1234', 'contas');
 if ($link -> connect_errno){
     echo ('<h1>Não conseguiu se conectar: </h1>' . $link -> connect_error . '<br>');
@@ -24,6 +25,7 @@ $anomesdia=$_POST['anomesdia'];
 $descricao=$_POST['descricao'];
 $parcelado=$_POST['parcelado'];
 $qtdparc=(int)$_POST['qtdparc'];
+$parcela=$valor/$qtdparc;
 
 $anomes = date("Ym", strtotime($anomesdia));
 
@@ -38,7 +40,7 @@ if(!$link -> query("DELETE FROM hashes WHERE hash = '$hashmod'")){
 if($parcelado == "sim"){
     $validacaoString = $tipo."".$valor."".$anomesdia."".$descricao."".$parcelado."".$qtdparc;
     $validacaoHash = hash("sha256", "$validacaoString");
-    if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc, anomes) VALUES('$tipo','$valor','$anomesdia','$validacaoHash','$descricao','$parcelado','$qtdparc', '1', '$anomes')")){
+    if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc, anomes, parcela, usuario) VALUES('$tipo','$valor','$anomesdia','$validacaoHash','$descricao','$parcelado','$qtdparc', '1', '$anomes', '$parcela', '$login_cookie')")){
         //echo '<h1>Não foi possível executar sua solicitacao</h1><br>' ;
     }
     if(!$link -> query("INSERT INTO hashes VALUES('$anomesdia','$validacaoHash')")){
@@ -56,7 +58,7 @@ if($parcelado == "sim"){
         $validacaoString = $tipo."".$valor."".$anomesdia."".$descricao."".$parcelado."".$qtdparc;
         $validacaoHash = hash("sha256", "$validacaoString");
         $imaisum = $i+1;
-        if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc, anomes) VALUES('$tipo','$valor','$final','$validacaoHash','$descricao','$parcelado','$qtdparc', '$imaisum', '$anomes')")){
+        if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc, anomes, parcela, usuario) VALUES('$tipo','$valor','$final','$validacaoHash','$descricao','$parcelado','$qtdparc', '$imaisum', '$anomes', '$parcela', '$login_cookie')")){
             //echo '<h1>Não foi possível executar sua solicitacao</h1><br>' ;
         }
         echo('<p><strong>Validação: </strong>'.$validacaoHash.'<br>');
@@ -66,7 +68,7 @@ if($parcelado == "sim"){
 else{
     $validacaoString = $tipo."".$valor."".$anomesdia."".$descricao."".$parcelado."".$qtdparc;
     $validacaoHash = hash("sha256", "$validacaoString");
-    if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc, anomes) VALUES('$tipo','$valor','$anomesdia','$validacaoHash','$descricao','$parcelado','$qtdparc', '1', '$anomes')")){
+    if(!$link -> query("INSERT INTO lancamentos(Tipo, Valor, AnoMesDia, Validacao, Descricao, Parcelado, QtdParc, nParc, anomes, parcela, usuario) VALUES('$tipo','$valor','$anomesdia','$validacaoHash','$descricao','$parcelado','$qtdparc', '1', '$anomes', '$parcela', '$login_cookie')")){
         //echo '<h1>Não foi possível executar sua solicitacao</h1><br>' ;
     }
     if(!$link -> query("INSERT INTO hashes VALUES('$anomesdia','$validacaoHash')")){
@@ -77,6 +79,7 @@ else{
 }
 ?>
 <p><string><a href="./index.php">Voltar</a></strong>
+<p><?php echo "<p> $login_cookie </p>"; ?><string><a href="./logout.php">Deslogar</a></strong>
 </body>
 </html>
 

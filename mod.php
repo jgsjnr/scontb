@@ -1,3 +1,4 @@
+<?php include 'verify.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,5 +28,6 @@
         <p><strong>Quantidade de parcelas:</strong> <br><input type="text" name="qtdparc" class="campo"/></p>
         <p><input type="submit" class="botao" value="Modificar"/></p> <br>
        </form> 
+       <p><?php echo "<p> $login_cookie </p>"; ?><string><a href="./logout.php">Deslogar</a></strong>
 </body>
 </html>
