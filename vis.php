@@ -1,7 +1,8 @@
+<? include 'verify.php' ?>
 <?php 
      include 'verify.php';
      $connect = mysqli_connect("localhost", "root", "1234", "contas");  
-     $query ="SELECT * FROM analise WHERE nParc = 1 ORDER BY Id desc";
+     $query ="SELECT * FROM analise WHERE nParc = 1 AND usuario = '$login_cookie' ORDER BY Id desc";
      $dropAnalise = "DROP TABLE IF EXISTS analise";
      $makeAnalise = "CREATE TABLE analise AS (SELECT *, CASE WHEN QtdParc > 1 THEN 'Parcelado' ELSE 'A vista' END AS flag_prazo, CASE WHEN QtdParc = nParc THEN 'Final' WHEN nParc = 1 THEN 'Inicial' ELSE 'Parcial' END AS Parcial, CASE WHEN nParc = 1 THEN Valor END AS vl_total FROM lancamentos)";
      $result = mysqli_query($connect, $dropAnalise);

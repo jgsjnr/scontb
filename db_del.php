@@ -30,7 +30,7 @@ else{
 $link -> close();
 echo $hashmod;
 ?>
-<p><string><a href="./index.php">Voltar</a></strong>
+<p><string><a href="./del.php">Voltar</a></strong>
 <p><?php echo "<p> $login_cookie </p>"; ?><string><a href="./logout.php">Deslogar</a></strong>
 </body>
 </html>

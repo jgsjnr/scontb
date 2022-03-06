@@ -65,7 +65,7 @@ else{
     $link -> close();
 }
 ?>
-<p><string><a href="./index.php">Voltar</a></strong>
+<p><string><a href="./mod.php">Voltar</a></strong>
 <p><?php echo "<p> $login_cookie </p>"; ?><string><a href="./logout.php">Deslogar</a></strong>
 </body>
 </html>
